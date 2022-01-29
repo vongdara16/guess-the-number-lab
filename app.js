@@ -47,5 +47,16 @@ const game = {
   },
   prevGuesses: [],
   // 1. prevGuesses
+  getGuess: function(){
+    // 2. getguess
+    let input = prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}`)
+    // player input their number
+    if (parseInt(input) == NaN){
+    return NaN
+    }
+    // 3. value that is a number not string | is between smallest and biggest num inclus.
+    // hints: while loop | parseInt returns NaN if the string cannot be parsed into a number
+    }
+  
 }
 
