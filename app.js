@@ -45,5 +45,7 @@ const game = {
       (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
       return this.secretNum;
   },
+  prevGuesses: [],
+  // 1. prevGuesses
 }
 
