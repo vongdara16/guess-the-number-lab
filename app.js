@@ -42,39 +42,54 @@ const game = {
   biggestNum: 100,
   smallestNum: 1,
   secretNum: null,
+  prevGuesses: [],
   play: function() {
     this.secretNum = Math.floor(Math.random() * (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
     //return this.secretNum;
     // retuns secretNum for computer
-  
-    do {
-      this.getGuess();
-      this.prevGuesses.push(this.getGuess());
-    } while (this.getGuess() < this.biggestNum && this.getGuess() > this.smallestNum)
+    //this.getGuess();
+    let guess = this.getGuess()
+    // while(guess < this.smallestNum && guess > this.biggestNum){
+    //   this.prevGuesses.push(guess);
+    //   this.getGuess();
+    // }
+
+    // do {
+    //   this.prevGuesses.push(this.getGuess());
+    //   this.getGuess();
+    // } while (this.getGuess() < this.biggestNum && this.getGuess() > this.smallestNum)
     // do .. while calls getGuess and pushes the input into prevGuesses array. 
     // while it is in between the range. 
 
   },
-  prevGuesses: [],
   // 1. prevGuesses
   getGuess: function(){
     // 2. getguess
-    let input = prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}`)
-    //console.log(parseInt(input))    // I don't think parseInt is necessary from testing this out and looking it up.
-    //console.log(typeof input)
-    //console.log(isNaN(input))
-    // player input their number
-    if (isNaN(input) === true){
-      return `Seems like ${input} isn't a number! Please enter a number!`
-    // 3. value that is a number not string | is between smallest and biggest num inclus.
-    // hints: while loop | parseInt returns NaN if the string cannot be parsed into a number
+    let input = Math.round(Number(prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}`)))
+    //console.log(typeof (parseInt(input)))    
+    console.log(typeof input)
+    console.log(Math.round(input))
+    console.log(!!input)
+    if (!!input === false){
+      return 'please input a number!'
     } else if (input > this.biggestNum || input < this.smallestNum){
-        return `Please input a number between ${this.smallestNum} and ${this.biggestNum}!`
-        // checks if input is between the desired range
-    } else{
+      return 'num out of range'
+    } while (input){
       return input
     }
 
+
+    //console.log(isNaN(parseInt(input, 10)))
+    // player input their number
+    // if (isNaN(parseInt(input)) === true){
+    //   return `Seems like ${input} isn't a number! Please enter a number!`
+    // 3. value that is a number not string | is between smallest and biggest num inclus.
+    // hints: while loop | parseInt returns NaN if the string cannot be parsed into a number
+    // } else if (input > this.biggestNum || input < this.smallestNum){
+    //     return `Please input a number between ${this.smallestNum} and ${this.biggestNum}!`
+        // checks if input is between the desired range
+    // } else{
+    //   return input
     },
   
   render: function(){
@@ -88,7 +103,35 @@ const game = {
   }
 }
 
-//game.getGuess()                                   
-game.play()
-console.log(game.secretNum)
-console.log(game.prevGuesses)
+console.log(game.getGuess())
+//console.log(game.play())
+//console.log(game.play())
+
+//console.log(game.secretNum)
+// console.log(game.prevGuesses.join(', '))
+//console.log(game.getGuess())
+
+// let test = 'fkldsja'
+// let bait = Number(test)
+// console.log(typeof bait)
+// console.log(isNaN(bait))
+// console.log(!!bait + ' bait bool') // this may be useful
+// if (bait){             //(isNaN(bait) === true){
+//   console.log('nono') // this also may be useful. i should be able to use this for determining true false for if statements. and to simplify, i can use just number(test) and it will put out true false. 
+  // then i can put a message saying whether its a number or not and repeat.
+  // needs to be in a while loop too to continuously check the inputs
+  // instead of console.log everything start using alerts. and if trouble shooting, use console.log
+// } else {
+//   console.log('yesss')
+// }
+// console.log(Number(test)) // use this for testing if number
+// console.log(typeof (Number(test)))
+
+
+// function cheese (text){
+//   console.log('food ' + text)
+// }
+// let bingo = cheese('banana')
+// console.log(typeof(bingo))
+// bingo = cheese('fig')
+// console.log(typeof bingo)
