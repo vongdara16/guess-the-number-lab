@@ -44,21 +44,29 @@ const game = {
   secretNum: null,
   prevGuesses: [],
   guess: this.smallestNum-1,
+  // inRange: ((this.guess < this.biggestNum) && (this.guess > this.smallestNum)),
   play: function() {
     this.secretNum = Math.floor(Math.random() * (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
     //return this.secretNum;
     // retuns secretNum for computer
     //this.getGuess();        
-
+    // let n;
     while (this.guess !== this.secretNum){
+      // n++;
       this.getGuess()
-      this.prevGuesses.push(this.guess)
+      if ((isNaN(this.guess) === false) && ((this.guess < this.biggestNum) && (this.guess > this.smallestNum))){
+        this.prevGuesses.push(this.guess)
+      }
       this.render()
+      // if ((this.guess < this.biggestNum) && (this.guess > this.smallestNum)() && !!this.guess){
+      //   this.prevGuesses.push(this.guess)
+      // }
+      // }
     }
 
-    // let guess = this.getGuess() 
-    // console.log(guess)
-    // console.log(!!guess)
+    // let guess = this.getGuess()  
+    // console.log(guess) 
+    // console.log(!!guess) 
     // console.log(typeof guess) // what getGuess returns changes the type
     // while(guess < this.smallestNum && guess > this.biggestNum){
     //   this.prevGuesses.push(guess);
@@ -66,9 +74,9 @@ const game = {
     // }
 
     // do {
-    //   this.prevGuesses.push(this.getGuess());
+    //   this.prevGuesses.push(this.getGuess());  
     //   this.getGuess();
-    // } while (this.getGuess() < this.biggestNum && this.getGuess() > this.smallestNum)
+    // } while (this.getGuess() < this.biggestNum && this.getGuess() > this.smallestNum) 
     // do .. while calls getGuess and pushes the input into prevGuesses array. 
     // while it is in between the range. 
     return 'you won'
@@ -77,19 +85,25 @@ const game = {
   getGuess: function(){
     // 2. getguess
     let input = Math.round(Number(prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}`)))
-    //console.log(typeof (parseInt(input)))         
+    // let n;
+    //console.log(typeof (parseInt(input)))             
     // console.log(typeof input)
-    // console.log(Math.round(input))
-    // console.log(!!input)
+    // console.log(Number(input))
+    // console.log(!!NaN)  
+    // console.log(input)
     if (!!input === false){
       alert ('please input a number!')
     } else if (input > this.biggestNum || input < this.smallestNum){
       alert ('num out of range')
     } 
-    while (input){
+    while ((!!input === true) && (input < this.biggestNum && input > this.smallestNum)){
       this.guess = input;
+      // n++;
       return input
     }
+    // if (n === this.prevGuesses.length){
+    //   push();
+    // }
 
 
     //console.log(isNaN(parseInt(input, 10)))  
@@ -103,7 +117,7 @@ const game = {
         // checks if input is between the desired range
     // } else{
     //   return input
-    },
+  },
   
   render: function(){
     if (Number(this.guess)){
@@ -112,30 +126,48 @@ const game = {
         alert(`Congrats! You guessed the number in ${this.prevGuesses.length} tries`)
       } else if (this.guess < this.secretNum){
         //this.smallestNum = this.guess
-        this.check()
-        alert(`too low ${this.prevGuesses.join(', ')}`)
+        this.tooLow()
+        alert(`too low ${this.prevGuesses.join(', ')} and answer ${this.secretNum}`)
       } else if (this.guess > this.secretNum) {
         //this.biggestNum = this.guess
-        this.check()
-        alert(`too high ${this.prevGuesses.join(', ')}`)
-      } else {
-        return 'nothing'
-      }
+        this.tooHigh()
+        alert(`too high ${this.prevGuesses.join(', ')} and answer ${this.secretNum}`)
+      } 
     }
     
   },
 
-  check: function(){
-    //let idx = this.prevGuesses.length - 1
-    if ((this.guess > this.smallestNum && this.guess < this.biggestNum) && this.guess < this.secretNum){
+
+  tooLow: function(){
+    if (this.guess > this.smallestNum && this.guess < this.biggestNum){
       this.smallestNum = this.guess
-    } else if ((this.guess > this.smallestNum && this.guess < this.biggestNum) && this.guess > this.secretNum){
+    }
+  },
+  
+  tooHigh: function(){
+    if(this.guess < this.biggestNum & this.guess > this.smallestNum){
       this.biggestNum = this.guess
     }
-  }
+  },
+
+  // inRange: function(){
+  //   return (((this.guess-this.smallestNum)*(this.guess-this.biggestNum)) <= 0)
+  // }
+  // check: function(){
+    //let idx = this.prevGuesses.length - 1
+  //   if ((this.guess > this.smallestNum && this.guess < this.biggestNum) && this.guess < this.secretNum){
+  //     this.smallestNum = this.guess
+  //   } else if ((this.guess > this.smallestNum && this.guess < this.biggestNum) && this.guess > this.secretNum){
+  //     this.biggestNum = this.guess
+  //   }
+  // },
+
+  // push: function(){
+  //   this.prevGuesses.push(this.guess)
+  // }
 }
 
-// console.log(game.getGuess())           
+// console.log(game.getGuess())                  
 // console.log(game.guess)
 // console.log(game.play()) 
 console.log(game.play())
@@ -146,7 +178,7 @@ console.log(game.play())
 // console.log(game.prevGuesses.length)
 //console.log(game.getGuess())
 
-let test = '154'
+let test = '13564'
 // let bait = Number(test)
 // console.log(typeof bait)
 // console.log(isNaN(bait))
@@ -166,7 +198,7 @@ if (Number(test)){             //(isNaN(bait) === true){
 // function cheese (text){
 //   console.log('food ' + text)
 // }
-// let bingo = cheese('banana')
+// let bingo = cheese('banana') 
 // console.log(typeof(bingo))
 // bingo = cheese('fig')
 // console.log(typeof bingo)
