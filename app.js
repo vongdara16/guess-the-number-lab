@@ -41,22 +41,44 @@ const game = {
   smallestNum: 1,
   secretNum: null,
   play: function() {
-    this.secretNum = Math.floor(Math.random() * 
-      (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
-      return this.secretNum;
+    this.secretNum = Math.floor(Math.random() * (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
+    return this.secretNum;
+    // retuns secretNum for computer
+
+    do {
+      this.getGuess();
+      this.prevGuesses.push(this.getGuess());
+    } while (input < this.biggestNum && input > this.smallestNum)
+    // do .. while calls getGuess and pushes the input into prevGuesses array. 
+    // while it is in between the range. 
+
   },
   prevGuesses: [],
   // 1. prevGuesses
   getGuess: function(){
     // 2. getguess
     let input = prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}`)
+    console.log(parseInt(input))    // I don't think parseInt is necessary from testing this out and looking it up.
+    console.log(typeof input)
+    console.log(isNaN(input))
     // player input their number
-    if (parseInt(input) == NaN){
-    return NaN
-    }
+    if (isNaN(input) === true){
+      return `Seems like ${input} isn't a number! Please enter a number!`
     // 3. value that is a number not string | is between smallest and biggest num inclus.
     // hints: while loop | parseInt returns NaN if the string cannot be parsed into a number
+    } else if (input > this.biggestNum || input < this.smallestNum){
+        return `Please input a number between ${this.smallestNum} and ${this.biggestNum}!`
+        // checks if input is between the desired range
+    } else{
+      return input
+    }
+
     }
   
+  render: function(){
+    if 
+  }
 }
 
+//game.getGuess()                                
+console.log(game.getGuess())
