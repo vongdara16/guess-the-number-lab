@@ -39,7 +39,7 @@
 
 const game = {
   title: 'Guess the Number!',
-  biggestNum: 10,
+  biggestNum: 5,
   smallestNum: 1,
   secretNum: null,
   prevGuesses: [],
@@ -54,7 +54,7 @@ const game = {
     while (this.guess !== this.secretNum){
       // n++;
       this.getGuess()
-      if ((isNaN(this.guess) === false) && ((this.guess < this.biggestNum) && (this.guess > this.smallestNum))){
+      if ((isNaN(this.guess) === false) && ((this.guess <= this.biggestNum) && (this.guess >= this.smallestNum))){
         this.prevGuesses.push(this.guess)
       }
       this.render()
@@ -86,8 +86,8 @@ const game = {
     // 2. getguess
     let input = Math.round(Number(prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}`)))
     // let n;
-    //console.log(typeof (parseInt(input)))             
-    // console.log(typeof input)
+    //console.log(typeof (parseInt(input)))              
+    // console.log(typeof input)  
     // console.log(Number(input))
     // console.log(!!NaN)  
     // console.log(input)
@@ -96,7 +96,7 @@ const game = {
     } else if (input > this.biggestNum || input < this.smallestNum){
       alert ('num out of range')
     } 
-    while ((!!input === true) && (input < this.biggestNum && input > this.smallestNum)){
+    while ((!!input === true) && (input <= this.biggestNum && input >= this.smallestNum)){
       this.guess = input;
       // n++;
       return input
