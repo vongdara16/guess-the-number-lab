@@ -44,9 +44,8 @@ const game = {
     this.secretNum = Math.floor(Math.random() * (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
     return this.secretNum;
     // retuns secretNum for computer
-
+    this.getGuess();
     do {
-      this.getGuess();
       this.prevGuesses.push(this.getGuess());
     } while (input < this.biggestNum && input > this.smallestNum)
     // do .. while calls getGuess and pushes the input into prevGuesses array. 
@@ -76,7 +75,13 @@ const game = {
     }
   
   render: function(){
-    if 
+    if (this.getGuess() === this.secretNum){
+      alert(`Congrats! You guessed the number in ${this.prevGuesses.length} tries`)
+    } else if (this.getGuess() < this.smallestNum){
+      alert(`too low ${this.prevGuesses}`)
+    } else {
+      alert(`too high ${this.prevGuesses}`)
+    }
   }
 }
 
