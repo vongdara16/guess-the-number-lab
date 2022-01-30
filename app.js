@@ -39,16 +39,27 @@
 
 const game = {
   title: 'Guess the Number!',
-  biggestNum: 100,
+  biggestNum: 10,
   smallestNum: 1,
   secretNum: null,
   prevGuesses: [],
+  guess: null,
   play: function() {
     this.secretNum = Math.floor(Math.random() * (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
     //return this.secretNum;
     // retuns secretNum for computer
-    //this.getGuess();
-    let guess = this.getGuess()
+    //this.getGuess();        
+
+    while (this.guess !== this.secretNum){
+      this.getGuess()
+      this.prevGuesses.push(this.guess)
+      this.render()
+    }
+
+    // let guess = this.getGuess() 
+    // console.log(guess)
+    // console.log(!!guess)
+    // console.log(typeof guess) // what getGuess returns changes the type
     // while(guess < this.smallestNum && guess > this.biggestNum){
     //   this.prevGuesses.push(guess);
     //   this.getGuess();
@@ -60,26 +71,28 @@ const game = {
     // } while (this.getGuess() < this.biggestNum && this.getGuess() > this.smallestNum)
     // do .. while calls getGuess and pushes the input into prevGuesses array. 
     // while it is in between the range. 
-
+    return 'you won'
   },
   // 1. prevGuesses
   getGuess: function(){
     // 2. getguess
     let input = Math.round(Number(prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}`)))
-    //console.log(typeof (parseInt(input)))    
-    console.log(typeof input)
-    console.log(Math.round(input))
-    console.log(!!input)
+    //console.log(typeof (parseInt(input)))         
+    // console.log(typeof input)
+    // console.log(Math.round(input))
+    // console.log(!!input)
     if (!!input === false){
       return 'please input a number!'
     } else if (input > this.biggestNum || input < this.smallestNum){
       return 'num out of range'
-    } while (input){
+    } 
+    while (input){
+      this.guess = input;
       return input
     }
 
 
-    //console.log(isNaN(parseInt(input, 10)))
+    //console.log(isNaN(parseInt(input, 10)))  
     // player input their number
     // if (isNaN(parseInt(input)) === true){
     //   return `Seems like ${input} isn't a number! Please enter a number!`
@@ -93,37 +106,42 @@ const game = {
     },
   
   render: function(){
-    if (this.getGuess() === this.secretNum){
+    if (this.guess === this.secretNum){
       alert(`Congrats! You guessed the number in ${this.prevGuesses.length} tries`)
-    } else if (this.getGuess() < this.smallestNum){
-      alert(`too low ${this.prevGuesses}`)
+    } else if (this.guess < this.secretNum){
+      this.smallestNum = this.guess
+      alert(`too low ${this.prevGuesses.join(', ')}`)
     } else {
-      alert(`too high ${this.prevGuesses}`)
+      this.biggestNum = this.guess
+      alert(`too high ${this.prevGuesses.join(', ')}`)
     }
   }
 }
 
-console.log(game.getGuess())
-//console.log(game.play())
-//console.log(game.play())
+// console.log(game.getGuess())      
+// console.log(game.guess)
+// console.log(game.play()) 
+console.log(game.play())
+
 
 //console.log(game.secretNum)
-// console.log(game.prevGuesses.join(', '))
+console.log(game.prevGuesses.join(', '))
+console.log(game.prevGuesses.length)
 //console.log(game.getGuess())
 
-// let test = 'fkldsja'
+let test = '154'
 // let bait = Number(test)
 // console.log(typeof bait)
 // console.log(isNaN(bait))
 // console.log(!!bait + ' bait bool') // this may be useful
-// if (bait){             //(isNaN(bait) === true){
-//   console.log('nono') // this also may be useful. i should be able to use this for determining true false for if statements. and to simplify, i can use just number(test) and it will put out true false. 
+if (Number(test)){             //(isNaN(bait) === true){
+  console.log('nono') // this also may be useful. i should be able to use this for determining true false for if statements. and to simplify, i can use just number(test) and it will put out true false. 
   // then i can put a message saying whether its a number or not and repeat.
   // needs to be in a while loop too to continuously check the inputs
   // instead of console.log everything start using alerts. and if trouble shooting, use console.log
-// } else {
-//   console.log('yesss')
-// }
+} else {
+  console.log('yesss')
+}
 // console.log(Number(test)) // use this for testing if number
 // console.log(typeof (Number(test)))
 
