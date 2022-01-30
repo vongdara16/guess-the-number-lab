@@ -39,13 +39,16 @@
 
 const game = {
   title: 'Guess the Number!',
-  biggestNum: 5,
-  smallestNum: 1,
+  biggestNum: null,
+  smallestNum: null,
   secretNum: null,
   prevGuesses: [],
   guess: this.smallestNum-1,
   // inRange: ((this.guess < this.biggestNum) && (this.guess > this.smallestNum)),
   play: function() {
+    this.setBig();
+    this.setSmall();
+
     this.secretNum = Math.floor(Math.random() * (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
     //return this.secretNum;
     // retuns secretNum for computer
@@ -54,11 +57,12 @@ const game = {
     while (this.guess !== this.secretNum){
       // n++;
       this.getGuess()
-      if ((isNaN(this.guess) === false) && ((this.guess <= this.biggestNum) && (this.guess >= this.smallestNum))){
+      if ((!!this.guess) && ((this.guess <= this.biggestNum) && (this.guess >= this.smallestNum))){
         this.prevGuesses.push(this.guess)
       }
+      // console.log(!!Number(this.guess))
       this.render()
-      // if ((this.guess < this.biggestNum) && (this.guess > this.smallestNum)() && !!this.guess){
+      // if ((this.guess < this.biggestNum) && (this.guess > this.smallestNum)() && !!this.guess){ 
       //   this.prevGuesses.push(this.guess)
       // }
       // }
@@ -92,11 +96,13 @@ const game = {
     // console.log(!!NaN)  
     // console.log(input)
     if (!!input === false){
-      alert ('please input a number!')
+      alert ('please input a number!');
+      this.guess = input;
     } else if (input > this.biggestNum || input < this.smallestNum){
+      this.guess = input;
       alert ('num out of range')
     } 
-    while ((!!input === true) && (input <= this.biggestNum && input >= this.smallestNum)){
+    while (input){//((!!input) && (input <= this.biggestNum && input >= this.smallestNum)){
       this.guess = input;
       // n++;
       return input
@@ -106,9 +112,9 @@ const game = {
     // }
 
 
-    //console.log(isNaN(parseInt(input, 10)))  
+    //console.log(isNaN(parseInt(input, 10)))    
     // player input their number
-    // if (isNaN(parseInt(input)) === true){
+    // if (isNaN(parseInt(input)) === true){ 
     //   return `Seems like ${input} isn't a number! Please enter a number!`
     // 3. value that is a number not string | is between smallest and biggest num inclus.
     // hints: while loop | parseInt returns NaN if the string cannot be parsed into a number
@@ -116,39 +122,51 @@ const game = {
     //     return `Please input a number between ${this.smallestNum} and ${this.biggestNum}!`
         // checks if input is between the desired range
     // } else{
-    //   return input
+    //   return input 
   },
   
   render: function(){
-    if (Number(this.guess)){
+    if (!!this.guess) {    //(Number(this.guess))
 
       if (this.guess === this.secretNum){
         alert(`Congrats! You guessed the number in ${this.prevGuesses.length} tries`)
-      } else if (this.guess < this.secretNum){
-        //this.smallestNum = this.guess
-        this.tooLow()
+      } else if (this.guess < this.secretNum && (this.guess >= this.smallestNum && this.guess <= this.biggestNum)){
+        this.smallestNum = this.guess
+        // this.tooLow()
         alert(`too low ${this.prevGuesses.join(', ')} and answer ${this.secretNum}`)
-      } else if (this.guess > this.secretNum) {
-        //this.biggestNum = this.guess
-        this.tooHigh()
+      } else if (this.guess > this.secretNum && (this.guess <= this.biggestNum && this.guess >= this.smallestNum)) {
+        this.biggestNum = this.guess
+        // this.tooHigh()
         alert(`too high ${this.prevGuesses.join(', ')} and answer ${this.secretNum}`)
       } 
     }
     
   },
 
+  setBig: function(){
+    let chooseBig = Math.round(Number(prompt(`Please enter a number to set as the Biggest`)))
+    this.biggestNum = chooseBig;
 
-  tooLow: function(){
-    if (this.guess > this.smallestNum && this.guess < this.biggestNum){
-      this.smallestNum = this.guess
-    }
   },
+
+  setSmall: function(){
+    let chooseSmall = Math.round(Number(prompt(`Please enter a number to set as the Smallest`)))
+    this.smallestNum = chooseSmall;
+
+  },
+
+
+  // tooLow: function(){
+  //   if (this.guess > this.smallestNum && this.guess < this.biggestNum){
+  //     this.smallestNum = this.guess
+  //   }
+  // },
   
-  tooHigh: function(){
-    if(this.guess < this.biggestNum & this.guess > this.smallestNum){
-      this.biggestNum = this.guess
-    }
-  },
+  // tooHigh: function(){
+  //   if(this.guess < this.biggestNum & this.guess > this.smallestNum){
+  //     this.biggestNum = this.guess
+  //   }
+  // },
 
   // inRange: function(){
   //   return (((this.guess-this.smallestNum)*(this.guess-this.biggestNum)) <= 0)
@@ -178,18 +196,18 @@ console.log(game.play())
 // console.log(game.prevGuesses.length)
 //console.log(game.getGuess())
 
-let test = '13564'
-// let bait = Number(test)
-// console.log(typeof bait)
+let test = '3'
+let bait = Math.round(Number(test))
+console.log(typeof bait)
 // console.log(isNaN(bait))
-// console.log(!!bait + ' bait bool') // this may be useful
-if (Number(test)){             //(isNaN(bait) === true){
-  console.log('nono') // this also may be useful. i should be able to use this for determining true false for if statements. and to simplify, i can use just number(test) and it will put out true false. 
+console.log(!!bait + '  bool') // this may be useful
+if (!!bait){             //(isNaN(bait) === true){
+  console.log('this is true') // this also may be useful. i should be able to use this for determining true false for if statements. and to simplify, i can use just number(test) and it will put out true false. 
   // then i can put a message saying whether its a number or not and repeat.
   // needs to be in a while loop too to continuously check the inputs
   // instead of console.log everything start using alerts. and if trouble shooting, use console.log
 } else {
-  console.log('yesss')
+  console.log('this is false')
 }
 // console.log(Number(test)) // use this for testing if number
 // console.log(typeof (Number(test)))
