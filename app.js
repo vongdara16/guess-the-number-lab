@@ -39,15 +39,23 @@
 
 const game = {
   title: 'Guess the Number!',
-  biggestNum: null,
-  smallestNum: null,
+  biggestNum: 10,
+  smallestNum: 1,
   secretNum: null,
   prevGuesses: [],
   guess: this.smallestNum-1,
-  // inRange: ((this.guess < this.biggestNum) && (this.guess > this.smallestNum)),
+  // inRange: ((this.guess < this.biggestNum) && (this.guess > this.smallestNum)), 
   play: function() {
-    this.setBig();
-    this.setSmall();
+    this.chooseNums();
+    // if (this.setNum1() < this.setNum2()){
+    //   this.biggestNum = this.setNum2();
+    //   this.smallestNum = this.setNum1();
+    // } else {
+    //   this.biggestNum = this.setNum1();
+    //   this.smallestNum = this.setNum2();
+    // }
+    // this.setBig();
+    // this.setSmall();
 
     this.secretNum = Math.floor(Math.random() * (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
     //return this.secretNum;
@@ -112,7 +120,7 @@ const game = {
     // }
 
 
-    //console.log(isNaN(parseInt(input, 10)))    
+    //console.log(isNaN(parseInt(input, 10)))     
     // player input their number
     // if (isNaN(parseInt(input)) === true){ 
     //   return `Seems like ${input} isn't a number! Please enter a number!`
@@ -133,28 +141,37 @@ const game = {
       } else if (this.guess < this.secretNum && (this.guess >= this.smallestNum && this.guess <= this.biggestNum)){
         this.smallestNum = this.guess
         // this.tooLow()
-        alert(`too low ${this.prevGuesses.join(', ')} and answer ${this.secretNum}`)
+        alert(`too low ${this.prevGuesses.join(', ')}`) // and answer ${this.secretNum}`)
       } else if (this.guess > this.secretNum && (this.guess <= this.biggestNum && this.guess >= this.smallestNum)) {
         this.biggestNum = this.guess
         // this.tooHigh()
-        alert(`too high ${this.prevGuesses.join(', ')} and answer ${this.secretNum}`)
+        alert(`too high ${this.prevGuesses.join(', ')}`) // and answer ${this.secretNum}`)
       } 
     }
     
   },
 
-  setBig: function(){
-    let chooseBig = Math.round(Number(prompt(`Please enter a number to set as the Biggest`)))
-    this.biggestNum = chooseBig;
-
+  chooseNums: function(){
+    let num1 = Math.round(Number(prompt(`Please enter the beginning number for your range`)))
+    let num2 = Math.round(Number(prompt(`Please enter the last number for your range`)))
+    if (num1 > num2){
+      this.smallestNum = num2;
+      this.biggestNum = num1;
+    } else {
+      this.smallestNum = num1;
+      this.biggestNum = num2;
+    }
   },
 
-  setSmall: function(){
-    let chooseSmall = Math.round(Number(prompt(`Please enter a number to set as the Smallest`)))
-    this.smallestNum = chooseSmall;
+  // setNum1: function(){
+  //   let chooseNum1 = Math.round(Number(prompt(`Please enter the beginning number for your range`)))
+  //   return chooseNum1;
+  // },
 
-  },
-
+  // setNum2: function(){
+  //   let chooseNum2 = Math.round(Number(prompt(`Please enter the last number for your range`)))
+  //   return chooseNum2;
+  // },
 
   // tooLow: function(){
   //   if (this.guess > this.smallestNum && this.guess < this.biggestNum){
