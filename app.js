@@ -43,7 +43,7 @@ const game = {
   smallestNum: 1,
   secretNum: null,
   prevGuesses: [],
-  guess: null,
+  guess: this.smallestNum-1,
   play: function() {
     this.secretNum = Math.floor(Math.random() * (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
     //return this.secretNum;
@@ -82,9 +82,9 @@ const game = {
     // console.log(Math.round(input))
     // console.log(!!input)
     if (!!input === false){
-      return 'please input a number!'
+      alert ('please input a number!')
     } else if (input > this.biggestNum || input < this.smallestNum){
-      return 'num out of range'
+      alert ('num out of range')
     } 
     while (input){
       this.guess = input;
@@ -106,27 +106,44 @@ const game = {
     },
   
   render: function(){
-    if (this.guess === this.secretNum){
-      alert(`Congrats! You guessed the number in ${this.prevGuesses.length} tries`)
-    } else if (this.guess < this.secretNum){
+    if (Number(this.guess)){
+
+      if (this.guess === this.secretNum){
+        alert(`Congrats! You guessed the number in ${this.prevGuesses.length} tries`)
+      } else if (this.guess < this.secretNum){
+        //this.smallestNum = this.guess
+        this.check()
+        alert(`too low ${this.prevGuesses.join(', ')}`)
+      } else if (this.guess > this.secretNum) {
+        //this.biggestNum = this.guess
+        this.check()
+        alert(`too high ${this.prevGuesses.join(', ')}`)
+      } else {
+        return 'nothing'
+      }
+    }
+    
+  },
+
+  check: function(){
+    //let idx = this.prevGuesses.length - 1
+    if ((this.guess > this.smallestNum && this.guess < this.biggestNum) && this.guess < this.secretNum){
       this.smallestNum = this.guess
-      alert(`too low ${this.prevGuesses.join(', ')}`)
-    } else {
+    } else if ((this.guess > this.smallestNum && this.guess < this.biggestNum) && this.guess > this.secretNum){
       this.biggestNum = this.guess
-      alert(`too high ${this.prevGuesses.join(', ')}`)
     }
   }
 }
 
-// console.log(game.getGuess())      
+// console.log(game.getGuess())           
 // console.log(game.guess)
 // console.log(game.play()) 
 console.log(game.play())
 
 
 //console.log(game.secretNum)
-console.log(game.prevGuesses.join(', '))
-console.log(game.prevGuesses.length)
+// console.log(game.prevGuesses.join(', '))
+// console.log(game.prevGuesses.length)
 //console.log(game.getGuess())
 
 let test = '154'
