@@ -35,6 +35,8 @@
   // let sign = prompt('hello your name is')
 // alert(sign)
 
+
+
 const game = {
   title: 'Guess the Number!',
   biggestNum: 100,
@@ -42,12 +44,13 @@ const game = {
   secretNum: null,
   play: function() {
     this.secretNum = Math.floor(Math.random() * (this.biggestNum - this.smallestNum + 1)) + this.smallestNum;
-    return this.secretNum;
+    //return this.secretNum;
     // retuns secretNum for computer
-    this.getGuess();
+  
     do {
+      this.getGuess();
       this.prevGuesses.push(this.getGuess());
-    } while (input < this.biggestNum && input > this.smallestNum)
+    } while (this.getGuess() < this.biggestNum && this.getGuess() > this.smallestNum)
     // do .. while calls getGuess and pushes the input into prevGuesses array. 
     // while it is in between the range. 
 
@@ -57,9 +60,9 @@ const game = {
   getGuess: function(){
     // 2. getguess
     let input = prompt(`Enter a guess between ${this.smallestNum} and ${this.biggestNum}`)
-    console.log(parseInt(input))    // I don't think parseInt is necessary from testing this out and looking it up.
-    console.log(typeof input)
-    console.log(isNaN(input))
+    //console.log(parseInt(input))    // I don't think parseInt is necessary from testing this out and looking it up.
+    //console.log(typeof input)
+    //console.log(isNaN(input))
     // player input their number
     if (isNaN(input) === true){
       return `Seems like ${input} isn't a number! Please enter a number!`
@@ -72,7 +75,7 @@ const game = {
       return input
     }
 
-    }
+    },
   
   render: function(){
     if (this.getGuess() === this.secretNum){
@@ -85,5 +88,7 @@ const game = {
   }
 }
 
-//game.getGuess()                                
-console.log(game.getGuess())
+//game.getGuess()                                   
+game.play()
+console.log(game.secretNum)
+console.log(game.prevGuesses)
